@@ -1,0 +1,27 @@
+node_modules
+.next
+out
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+backend/reports/*.pdf
+backend/data/reports.json
+.DS_Store
+Thumbs.db
+
+# Legacy Next.js scaffold; the deployed application is the Python app.
+/app/
+/components/
+/lib/
+/types/
+/package.json
+/next.config.js
+/next-env.d.ts
+/tsconfig.json
+/tailwind.config.js
+/postcss.config.js
