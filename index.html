@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSCR Real Estate Investment Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="card hero">
+      <div>
+        <h1>DSCR Calculator</h1>
+        <p>realestatetofreedom.com</p>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Client & Property Details</h2>
+      <div class="grid cols-3">
+        <label>Property Name<input id="propertyName" type="text" placeholder="123 Main St Apartments" /></label>
+        <label>Full Name<input id="fullName" type="text" placeholder="John Doe" /></label>
+        <label>Email<input id="email" type="email" placeholder="john@email.com" /></label>
+      </div>
+      <p id="status" class="muted"></p>
+    </section>
+
+    <section class="card">
+      <h2>Capital Raise</h2>
+      <div class="grid capital-grid">
+        <label>Total Capital Raise<input id="totalCapitalRaise" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Historical Performance (T12)</h2>
+      <div class="grid cols-4">
+        <label>Annual Rent Income<input id="h_rentIncome" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+        <label>Annual Other Income<input id="h_otherIncome" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+        <label>Annual Operating Expenses<input id="h_operatingExpenses" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+        <label>Annual Debt Payment<input id="h_debtPayment" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+        <label>Asset Management Fee<input id="h_assetManagementFee" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+      </div>
+      <div class="year-live-grid historical-live-grid">
+        <article class="year-live-item"><p class="k">Net Income</p><p id="h_netIncome" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">NOI</p><p id="h_noi" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Actual DSCR</p><p id="h_dscr" class="v">N/A</p></article>
+        <article class="year-live-item"><p class="k">Cash Flow</p><p id="h_cashFlow" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Cashflow Net</p><p id="h_netCashFlow" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Cash Flow to LP</p><p id="h_cashFlowToLP" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Cash Flow to GP</p><p id="h_cashFlowToGP" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Other Income Ratio</p><p id="h_otherIncomeRatio" class="v">N/A</p></article>
+        <article class="year-live-item"><p class="k">Expense Ratio</p><p id="h_expenseRatio" class="v">N/A</p></article>
+      </div>
+    </section>
+
+    <div id="yearsWrap"></div>
+
+    <div class="year-actions no-print">
+      <button id="addProjectedYear" class="ghost-btn" type="button">+ Add Projected Year</button>
+      <span id="projectedYearCount">5 of 10 years</span>
+    </div>
+
+    <section class="card">
+      <h2>Projected Sale Costs</h2>
+      <div class="grid cols-2">
+        <label>Projected Loan at Sale<input id="projectedLoanAtSale" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+        <label>Projected Closing Costs at Sale<input id="projectedClosingCostsAtSale" class="currency-input" type="text" inputmode="decimal" value="$0" /></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Sale</h2>
+      <div class="grid cols-3">
+        <label>Projected Cap Rate at Sale (%)<input id="projectedCapRateAtSalePct" type="number" min="0" max="100" step="0.01" value="6.5" /></label>
+        <label>GP Split of Profit (%)<input id="gpSplitProfitPct" type="number" min="0" max="100" step="0.01" value="25" /></label>
+        <label>LP Split of Profit (%)<input id="lpSplitProfitPct" type="number" min="0" max="100" step="0.01" value="75" /></label>
+      </div>
+      <div class="sale-live-grid">
+        <article class="year-live-item"><p class="k">Sale Of Property</p><p id="sale_saleOfProperty" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">-Less Debt</p><p id="sale_lessDebt" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">-Less closing costs</p><p id="sale_lessClosingCosts" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">-Investor Capital</p><p id="sale_investorCapital" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Proceeds</p><p id="sale_proceeds" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Cashflow to LP</p><p id="sale_cashflowToLP" class="v">$0</p></article>
+        <article class="year-live-item"><p class="k">Cashflow to GP</p><p id="sale_cashflowToGP" class="v">$0</p></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>IRR Calculation</h2>
+      <div id="irrLiveGrid" class="irr-live-grid"></div>
+    </section>
+
+    <div class="dscr-summary-bar no-print">
+      <div class="average-dscr">
+        <span>Average DSCR</span>
+        <strong id="stickyAverageDscr">N/A</strong>
+      </div>
+    </div>
+
+    <p id="pdfValidationError" class="pdf-validation-error no-print" role="alert" aria-live="assertive" hidden></p>
+    <div class="actions cta-row no-print">
+      <button id="downloadPdf" class="primary-btn" type="button">Download PDF</button>
+    </div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+
+
