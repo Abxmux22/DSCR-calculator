@@ -1,4 +1,4 @@
-const MIN_PROJECTED_YEARS = 5;
+const MIN_PROJECTED_YEARS = 3;
 const MAX_PROJECTED_YEARS = 10;
 let YEARS = Array.from({ length: MIN_PROJECTED_YEARS }, (_, index) => index + 1);
 
@@ -186,7 +186,7 @@ function validateInput(input) {
     ["Historical Performance (T12)", "Annual Other Income", "h_otherIncome", input.historical.otherIncome],
     ["Historical Performance (T12)", "Annual Operating Expenses", "h_operatingExpenses", input.historical.operatingExpenses],
     ["Historical Performance (T12)", "Annual Debt Payment", "h_debtPayment", input.historical.debtPayment],
-    ["Historical Performance (T12)", "Asset Management Fee", "h_assetManagementFee", input.historical.assetManagementFee]
+    ["Historical Performance (T12)", "Asset Management Fee", "h_assetManagementFee", input.historical.assetManagementFee, true]
   ];
 
   YEARS.forEach((year) => {
@@ -196,7 +196,7 @@ function validateInput(input) {
       [`Projected Year ${year}`, "Other Income", `y${year}_otherIncome`, projection.otherIncome],
       [`Projected Year ${year}`, "Operating Expenses", `y${year}_operatingExpenses`, projection.operatingExpenses],
       [`Projected Year ${year}`, "Debt Payment", `y${year}_debtPayment`, projection.debtPayment],
-      [`Projected Year ${year}`, "Asset Management Fee", `y${year}_assetManagementFee`, projection.assetManagementFee],
+      [`Projected Year ${year}`, "Asset Management Fee", `y${year}_assetManagementFee`, projection.assetManagementFee, true],
       [`Projected Year ${year}`, "Cash Flow to LP (%)", `y${year}_cashFlowToLPPct`, projection.cashFlowToLPPct]
     );
   });
@@ -209,9 +209,9 @@ function validateInput(input) {
     ["Sale", "LP Split of Profit (%)", "lpSplitProfitPct", s.lpSplitProfitPct]
   );
 
-  for (const [section, field, fieldId, value] of requiredNumbers) {
-    if (!Number.isFinite(value) || value <= 0) {
-      return error(section, field, fieldId, "must be greater than 0");
+  for (const [section, field, fieldId, value, allowZero = false] of requiredNumbers) {
+    if (!Number.isFinite(value) || (allowZero ? value < 0 : value <= 0)) {
+      return error(section, field, fieldId, allowZero ? "must be 0 or greater" : "must be greater than 0");
     }
   }
 
@@ -258,7 +258,7 @@ function runAnalysis(input) {
     historical,
     projected,
     sale: {
-      year5Noi: finalYearNoi,
+      finalYearNoi,
       finalYear,
       saleValue,
       netSaleProceeds,
@@ -272,7 +272,7 @@ function runAnalysis(input) {
     },
     metrics: {
       averageDscr: dscrList.length ? dscrList.reduce((a, b) => a + b, 0) / dscrList.length : null,
-      year5Noi: finalYearNoi,
+      finalYearNoi,
       finalYear,
       estimatedSalePrice: saleValue,
       totalInvestorProfit: lpProfitShare,
@@ -415,7 +415,7 @@ async function downloadPdf(data) {
       rows: [
         currencyRow("Total Capital Raise", data.input.assumptions.totalCapitalRaise),
         numberRow("Average DSCR", data.metrics.averageDscr),
-        currencyRow(`Year ${data.metrics.finalYear} NOI`, data.metrics.year5Noi),
+        currencyRow(`Year ${data.metrics.finalYear} NOI`, data.metrics.finalYearNoi),
         currencyRow("Estimated Sale Price", data.metrics.estimatedSalePrice),
         currencyRow("LP Investor Profit", data.metrics.totalInvestorProfit),
         percentRow("Average Annual Cash on Cash", data.metrics.averageCashOnCashReturn),

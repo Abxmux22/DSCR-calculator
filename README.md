@@ -1,22 +1,22 @@
 # DSCR Calculator
 
-Python-hosted DSCR real estate calculator with live T12 and five-year projections, Sale and IRR analysis, and a multi-page investor PDF report.
+Python-hosted DSCR real estate calculator with live T12 and three-to-ten-year projections, Sale and IRR analysis, and a multi-page investor PDF report.
 
 ## Features
 
-- Historical T12 and Projected Years 1-5
+- Historical T12 and Projected Years 1-3, with optional Years 4-10
 - Live Net Income, NOI, ratios, DSCR, cash flow, LP/GP distributions, and annual cash-on-cash
 - Sale proceeds and LP/GP profit allocation
 - Investor IRR schedule and calculation
-- Multi-page PDF with a T12/Years 1-5 comparison matrix, executive summary, charts, Sale, IRR, logo, and page numbers
+- Multi-page PDF with a responsive T12/projected-year comparison matrix, executive summary, charts, Sale, IRR, logo, and page numbers
 - Responsive layout suitable for embedding in a GoHighLevel iframe
-- Temporary Autofill Test Data control (excluded from PDFs)
+- Required-field validation that blocks incomplete PDF reports
 
 ## Production Files
 
 - `index.html` - calculator form and live result containers
 - `styles.css` - responsive styling
-- `app.js` - formulas, live rendering, autofill, and PDF request payload
+- `app.js` - formulas, live rendering, validation, and PDF request payload
 - `backend/server.py` - static server and PDF generator
 - `assets/logo-header.jpg` - report logo
 - `render.yaml` - Render Blueprint configuration
